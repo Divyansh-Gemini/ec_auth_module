@@ -4,8 +4,8 @@
 const errorTextName = "Name should contain only alphabets.";
 const errorTextUsername = "Username should start with an alphabet. \nIt should not contain any special character other than underscore, period, or dash. \nIt should not contain undercore, period, or dash consecutively.";
 const errorTextEmail = "Invalid Email";
-const errorTextPassword = "Password should be a combination of lowercase & uppercase alphabets, numbers, and symbols only";
-const errorTextAddress = "Address should not contain special characters.";
+const errorTextPassword = "Password should contain at least 1 lowercase alphabet, 1 uppercase alphabet, 1 number, and 1 symbol";
+const errorTextAddress = "Address should not contain special characters other than comma, period, dash, brackets, slash.";
 const errorTextCity = "City should contain only alphabets.";
 const errorTextState = "State should contain only alphabets & space.";
 const errorTextContactNumber = "Invalid contact no.";
@@ -20,28 +20,32 @@ export function validateUser(requestBody) {
     const { f_name, l_name, username, email, password, address, city, state, mobile } = requestBody;
     let validationMsg;
 
-    if (!validName(f_name) || !validName(l_name)) {
+    if (!validName(f_name.trim())) {
         validationMsg = errorTextName;
     }
-    else if (!validUsername(username)) {
+    // Because there can be no last name 
+    else if (l_name.trim().length > 0 && !validName(l_name.trim())) {
+        validationMsg = errorTextName;
+    }
+    else if (!validUsername(username.trim())) {
         validationMsg = errorTextUsername;
     }
-    else if (!validEmail(email)) {
+    else if (!validEmail(email.trim())) {
         validationMsg = errorTextEmail;
     }
-    else if (!validPassword(password)) {
+    else if (!validPassword(password.trim())) {
         validationMsg = errorTextPassword;
     }
-    else if (!validAddress(address)) {
+    else if (!validAddress(address.trim())) {
         validationMsg = errorTextAddress;
     }
-    else if (!validCity(city)) {
+    else if (!validCity(city.trim())) {
         validationMsg = errorTextCity;
     }
-    else if (!validState(state)) {
+    else if (!validState(state.trim())) {
         validationMsg = errorTextState;
     }
-    else if (!validContactNumber(mobile)) {
+    else if (!validContactNumber(mobile.trim())) {
         validationMsg = errorTextContactNumber;
     }
     else {
@@ -98,7 +102,7 @@ export function validateSeller(requestBody) {
 // Name should contain only alphabets & length should lie b/w 2 & 50
 function validName(name) {
     console.log("\nsrc / validation.js / validName() called");
-    const nameRegex = /^[a-zA-Z ]{2,50}$/;
+    const nameRegex = /^[a-zA-Z ]{1,50}$/;
 
     if (nameRegex.test(name)) {
         console.log("--> Valid name");
@@ -113,7 +117,7 @@ function validName(name) {
 // same rule as of name
 function validCity(city) {
     console.log("\nsrc / validation.js / validCity() called");
-    const cityRegex = /^[a-zA-Z ]{2,40}$/;
+    const cityRegex = /^[a-zA-Z ]{1,40}$/;
 
     if (cityRegex.test(city)) {
         console.log("--> Valid city name");
@@ -128,7 +132,7 @@ function validCity(city) {
 // same rule as of name
 function validState(state) {
     console.log("\nsrc / validation.js / validState() called");
-    const stateRegex = /^[a-zA-Z ]{2,40}$/;
+    const stateRegex = /^[a-zA-Z ]{1,40}$/;
 
     if (stateRegex.test(state)) {
         console.log("--> Valid state name");
@@ -146,7 +150,7 @@ function validState(state) {
 function validUsername(username) {
     console.log("\nsrc / validation.js / validUsername() called");
 
-    const usernameRegex = /^(?!.*\.\.)(?!.*__)(?!.*--)(?!.*-_)(?!.*-\.)(?!.*_-)(?!.*_\.)(?!.*\.-)(?!.*\._)[a-zA-Z]+[a-zA-Z0-9_.-]{2,}$/;
+    const usernameRegex = /^(?!.*\.\.)(?!.*__)(?!.*--)(?!.*-_)(?!.*-\.)(?!.*_-)(?!.*_\.)(?!.*\.-)(?!.*\._)([a-zA-Z]+[a-zA-Z0-9_.-]*){1,50}$/;
     if (usernameRegex.test(username)) {
         console.log("--> Valid username");
         return true;
@@ -160,7 +164,7 @@ function validUsername(username) {
 // https://help.xmatters.com/ondemand/trial/valid_email_format.htm
 export function validEmail(email) {
     console.log("\nsrc / validation.js / validEmail() called");
-    const emailRegex = /^(?!.*\.\.)[a-zA-Z0-9_-]+[.]*[a-zA-Z0-9]+@[a-zA-Z0-9-.]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^(?!.*\.\.)[a-zA-Z0-9_-]*[.]*[a-zA-Z0-9_-]+@[a-zA-Z0-9-.]+\.[a-zA-Z]{2,}$/;
 
     if (emailRegex.test(email)) {
         console.log("--> Valid email");
@@ -191,7 +195,7 @@ function validPassword(password) {
 function validAddress(address) {
     console.log("\nsrc / validation.js / validAddress() called");
     const addressRegex = /^[a-zA-Z0-9\-/\.,)( ]+$/;
-
+x
     if (addressRegex.test(address)) {
         console.log("--> Valid address");
         return true;
@@ -220,7 +224,7 @@ function validContactNumber(contactNumber) {
 // Seller name should contain only alhpabets & spaces
 function validSellerName(name) {
     console.log("\nsrc / validation.js / validSellerName() called");
-    const nameRegex = /^[0-9a-zA-Z ]{2,50}$/;
+    const nameRegex = /^[0-9a-zA-Z ]{1,50}$/;
 
     if (nameRegex.test(name)) {
         console.log("--> Valid name");
