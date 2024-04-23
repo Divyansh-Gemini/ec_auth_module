@@ -13,7 +13,7 @@
 *	Need to create 4 APIs.
 1.	User Register API with Basic details needs.
 2.	User LOGIN API (email & password) and response json should have below format.
-  ```
+  ```json
   {
     status: ‘Success / Failure’,
     message: proper message base valid / invalid traditional details’,
@@ -30,3 +30,15 @@
 *	Coding writing should be properly formatted from a technical perspective.
 * API request & response should be executed from the Postman tool.
 *	Good to have - Integrate with SwaggerUI
+
+## Tech Stack
+- NodeJS
+- MySQL
+- Swagger
+- Postman
+
+<p align="center">
+    <a href="https://www.divyanshgemini.dev/">
+        <img src="https://skillicons.dev/icons?i=nodejs,mysql,postman" alt="tech stack" />
+    </a>
+</p>
